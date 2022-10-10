@@ -15,9 +15,6 @@ def carbon200down(): #세금면제
 
 def carbon200up(): #톤당 1억
 
-def carbon300up(): #톤당 2억
-
-def carbon400up(): #톤당 4억
 
 #셋업
 print("test")
