@@ -1,7 +1,9 @@
 #임포트
 
-
-playerdb = [[0 for col in range(6)] for row in range(11)]
+#플레이할 사람수 정하기
+print("플레이할 사람 수는 몇명?")
+playernumber = int(input())
+playerdb = [[0 for col in range(playernumber)] for row in range(11)]
 
 #게임규칙 정의 [번호, 수익, 탄소배출량]
 plantation = [0, -10, -15]
@@ -20,7 +22,12 @@ def carbon300up(): #톤당 2억
 def carbon400up(): #톤당 4억
 
 #셋업
-print("test")
+print("")
+
+for i in range(11):
+    for j in range(playernumber):
+
+        if
 
 
 
