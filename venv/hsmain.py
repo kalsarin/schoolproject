@@ -98,7 +98,7 @@ def totalCalculate():
             maxMoney = totalMoney
             winner = player + 1
     cutZone('@')
-    print("가장 돈을 많이 번 사람 : " + str(winner) + "번")
+    print("가장 돈을 많이 번 사람 : " + str(winner) + "번 플레이어")
 
 
 
@@ -109,14 +109,13 @@ cutZone(r'#')
 print("지구는 환경오염에 처해 있습니다. 옆에 표를 참고하여 환경을 파괴하지 않는 선에서 돈을 많이 버는 팀이 승리합니다."
       "\n플레이어는 사업을 실행시킬지 말지 두가지를 선택할 수 있습니다. 사업을 실행시킬때마다 각각의 규칙에 따라 총 탄소량이 늘고 돈을 벌게 됩니다."
       "\n이때 탄소가 늘게 되면 세금 징수량이 늘어나니 이를 잘 조절해서 돈을 많이 버십시오. 화이팅!")
-print("")
 cutZone(r'#')
 
 while (True):
     try:
         playerNum = int(input("게임을 플레이 할 인원은 몇명? "))  # 인원 수
 
-        if (playerNum < 0):
+        if (playerNum < 2):
             print("다시 입력해 주세요.")  # 범위가 잘못되었을때 출력
         else:
             break
@@ -124,27 +123,33 @@ while (True):
     except ValueError:
         print("입력값이 숫자가 아닙니다.")  # 문자열이 들어가 입력값이 숫자가 아닐때 출력
 
+    except IndexError:
+        print("입력값이 범위가 아닙니다.")  # 입력값이 범위가 아닐때 출력
+
 totalDB = [[0 for col in range(playerNum + 1)] for row in range(12)]
 
 for player in range(playerNum):  # 사업 정하기
     while True:
         try:
             totalDB[0][player + 1] = int(input('플레이어 ' + str(player + 1) + ' 번의 사업을 정해주세요. : '))
-
-            if (totalDB[0][player + 1] != 0 and totalDB[0][player + 1] != 1 and totalDB[0][player + 1] != 2 and
-                    totalDB[0][player + 1] != 3 and totalDB[0][player + 1] != 4 and totalDB[0][player + 1] != 5):
-                print("다시 입력해 주세요.")  # 범위가 잘못되었을때 출력
-            else:
+            if (totalDB[0][player + 1] >= 0 and totalDB[0][player + 1] <= 5):
+                print(str(player + 1) + "번 플레이어의 사업은 " + opDef[totalDB[0][player + 1]][0] + "입니다.")
+                print("")
                 break
+            else:
+                print("다시 입력해 주세요.")  # 범위가 잘못되었을때 출력
+
 
         except ValueError:
             print("입력값이 숫자가 아닙니다.")  # 문자열이 들어가 입력값이 숫자가 아닐때 출력
 
+        except IndexError:
+            print("입력값이 범위가 아닙니다.")  # 입력값이 범위가 아닐때 출력
+
+
+
 for turn in range(turnNum):  # 턴 진행
 
-    cutZone("@")
-
-    print(str(turn + 1) + " 번째 턴입니다.")
     for player in range(playerNum):
 
         totalCarbon += startTurn(turn, player)
@@ -152,14 +157,17 @@ for turn in range(turnNum):  # 턴 진행
         if (player + 1 != playerNum):
             cutZone('*')
             print("%7s" % str(turn + 1) + "턴 진행중")
-            print("")
+            cutZone('*')
             printChart()
+            print("")
+            print("현재 총 탄소량 : " + str(totalCarbon))
+            print("")
 
     tax = calculate(turn, player)
 
     cutZone('@')
     print("%7s" % str(turn + 1) + "턴 결과")
-    print("")
+    cutZone('@')
     printChart()
     print("")
     print("현재 총 탄소량 : " + str(totalCarbon))
